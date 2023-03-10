@@ -44,8 +44,3 @@ jobs:
       with:
         name: tmate
         path: tmate        
-    - name: Download a tmate Artifact
-      uses: actions/download-artifact@v2.1.1
-      with:
-        name: tmate
-        path: tmate
