@@ -16,6 +16,14 @@ on:
       - '**.h'
       - 'compat/*'
       - '.github/workflows/Ubuntu.yml'
+  workflow_dispatch:
+    branches:
+      - '*'
+    paths:
+      - '**.c'
+      - '**.h'
+      - 'compat/*'
+      - '.github/workflows/Ubuntu.yml'
 
 
 
@@ -31,7 +39,3 @@ jobs:
         ./configure
         make
         sudo make install
-
-
-
-
