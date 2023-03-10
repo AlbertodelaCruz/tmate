@@ -271,7 +271,6 @@ static void on_ssh_client_event(struct tmate_ssh_client *client)
 		ssh_set_blocking(session, 0);
 		ssh_options_set(session, SSH_OPTIONS_HOST, client->server_ip);
 		ssh_options_set(session, SSH_OPTIONS_LOG_VERBOSITY, &verbosity);
-		ssh_options_set(session, SSH_OPTIONS_PORT, &port);
 		ssh_options_set(session, SSH_OPTIONS_USER, "tmate");
 		ssh_options_set(session, SSH_OPTIONS_COMPRESSION, "yes");
 
@@ -288,6 +287,10 @@ static void on_ssh_client_event(struct tmate_ssh_client *client)
 			unsetenv("SSH_AUTH_SOCK");
 			free(identity);
 		}
+
+        ssh_options_parse_config(session, NULL);
+		ssh_options_set(session, SSH_OPTIONS_PORT, &port);
+		ssh_options_set(session, SSH_OPTIONS_HOSTKEYS, "ssh-rsa");
 
 		client->state = SSH_CONNECT;
 	}
@@ -560,7 +563,7 @@ static void ssh_log_function(int priority, const char *function,
 
 struct tmate_ssh_client *tmate_ssh_client_alloc(struct tmate_session *session,
 						const char *server_ip)
- 
+
 {
 	struct tmate_ssh_client *client;
 	client = xmalloc(sizeof(*client));
